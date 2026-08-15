@@ -326,6 +326,11 @@ const ALL_LETTERS = ["A","B","C","D","E","F"];
 const qpos = {};
 Object.keys(ALL_EXAMS).forEach(k=>qpos[k]=0);
 
+function scrollToQuestion(){
+  const el = document.getElementById("questionList");
+  if(el) el.scrollIntoView({block:"start", behavior:"instant"});
+}
+
 function buildNav(qs, i){
   const nav = document.createElement("div");
   nav.className = "qnav";
@@ -333,7 +338,7 @@ function buildNav(qs, i){
   prevBtn.className = "navbtn";
   prevBtn.textContent = "◀ Önceki";
   prevBtn.disabled = i===0;
-  prevBtn.onclick = ()=>{ qpos[currentExam]=Math.max(0,i-1); renderQuestions(); window.scrollTo(0,0); };
+  prevBtn.onclick = ()=>{ qpos[currentExam]=Math.max(0,i-1); renderQuestions(); scrollToQuestion(); };
   const counter = document.createElement("div");
   counter.className = "qcounter";
   counter.textContent = (i+1)+" / "+qs.length;
@@ -341,7 +346,7 @@ function buildNav(qs, i){
   nextBtn.className = "navbtn";
   nextBtn.textContent = "Sonraki ▶";
   nextBtn.disabled = i===qs.length-1;
-  nextBtn.onclick = ()=>{ qpos[currentExam]=Math.min(qs.length-1,i+1); renderQuestions(); window.scrollTo(0,0); };
+  nextBtn.onclick = ()=>{ qpos[currentExam]=Math.min(qs.length-1,i+1); renderQuestions(); scrollToQuestion(); };
   nav.appendChild(prevBtn); nav.appendChild(counter); nav.appendChild(nextBtn);
   return nav;
 }
